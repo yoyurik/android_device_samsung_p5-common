@@ -34,9 +34,7 @@ PRODUCT_COPY_FILES := \
     $(LOCAL_PATH)/init.p3.usb.rc:root/init.p3.usb.rc
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/modules/bcmdhd.ko:system/lib/modules/bcmdhd.ko
-
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/modules/dhd.ko:system/lib/modules/dhd.ko \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml \
     $(LOCAL_PATH)/keylayout/sec_jack.kl:system/usr/keylayout/sec_jack.kl \
@@ -53,7 +51,7 @@ PRODUCT_COPY_FILES += \
 # LPM (from TW-UX 3.2)
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/lpm/lib/libQmageDecoder.so:system/lib/libQmageDecoder.so \
-     $(LOCAL_PATH)/lpm/bin/charging_mode:system/bin/charging_mode \
+     $(LOCAL_PATH)/lpm/bin/lpmkey:system/bin/lpmkey \
      $(LOCAL_PATH)/lpm/bin/playlpm:system/bin/playlpm \
      $(LOCAL_PATH)/lpm/media/battery_charging_0.qmg:system/media/battery_charging_0.qmg \
      $(LOCAL_PATH)/lpm/media/battery_charging_20.qmg:system/media/battery_charging_20.qmg \
@@ -61,12 +59,13 @@ PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/lpm/media/battery_charging_60.qmg:system/media/battery_charging_60.qmg \
      $(LOCAL_PATH)/lpm/media/battery_charging_80.qmg:system/media/battery_charging_80.qmg \
      $(LOCAL_PATH)/lpm/media/battery_charging_100.qmg:system/media/battery_charging_100.qmg \
+     $(LOCAL_PATH)/lpm/media/battery_batteryerror.qmg:system/media/battery_batteryerror.qmg \
      $(LOCAL_PATH)/lpm/media/battery_error.qmg:system/media/battery_error.qmg \
      $(LOCAL_PATH)/lpm/media/chargingwarning.qmg:system/media/chargingwarning.qmg \
      $(LOCAL_PATH)/lpm/media/Disconnected.qmg:system/media/Disconnected.qmg
 
 PRODUCT_PROPERTY_OVERRIDES := \
-    wifi.interface=eth0 \
+    wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=15
 
 BOARD_WLAN_DEVICE_REV := bcm4330_b1
@@ -81,13 +80,24 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
         ro.cwm.enable_key_repeat=true
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/wifi/bcm4330_apsta.bin:system/etc/wifi/bcm4330_apsta.bin \
+    $(LOCAL_PATH)/wifi/bcm4330_p2p.bin:system/etc/wifi/bcm4330_p2p.bin \
+    $(LOCAL_PATH)/wifi/bcm4330_sta.bin:system/etc/wifi/bcm4330_sta.bin
+
+PRODUCT_PACKAGES += \
+        libinvensense_mpl
+
 PRODUCT_PACKAGES += \
         Torch \
-        libinvensense_mpl \
         audio.a2dp.default \
         libaudioutils \
-        audio.primary.p3
-        
+	libtinyalsa
+
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/audio/asound.conf:system/etc/asound.conf
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
@@ -106,6 +116,17 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/camera/nvcamera.conf:system/etc/nvcamera.conf \
+    $(LOCAL_PATH)/camera/cameradata/back_camera_test_pattern.yuv:system/cameradata/back_camera_test_pattern.yuv \
+    $(LOCAL_PATH)/camera/cameradata/datapattern_420sp.yuv:system/cameradata/datapattern_420sp.yuv \
+    $(LOCAL_PATH)/camera/cameradata/datapattern_front_420sp.yuv:system/cameradata/datapattern_front_420sp.yuv \
+    $(LOCAL_PATH)/camera/cameradata/front_camera_test_pattern.yuv:system/cameradata/front_camera_test_pattern.yuv
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/hdmi/dectable1.dat:system/etc/hdmi/dectable1.dat \
+    $(LOCAL_PATH)/hdmi/dectable.dat:system/etc/hdmi/dectable.dat
 
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
