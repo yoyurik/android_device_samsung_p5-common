@@ -93,10 +93,10 @@ PRODUCT_PACKAGES += \
         Torch \
         audio.a2dp.default \
         libaudioutils \
-	libtinyalsa
+        libtinyalsa
 
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/audio/asound.conf:system/etc/asound.conf
+        $(LOCAL_PATH)/audio/asound.conf:system/etc/asound.conf
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -138,19 +138,19 @@ PRODUCT_PACKAGES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	make_ext4fs \
-	setup_fs
+        make_ext4fs \
+        setup_fs
 
 DEVICE_PACKAGE_OVERLAYS := \
     $(LOCAL_PATH)/overlay
 
 # for bugmailer
 ifneq ($(TARGET_BUILD_VARIANT),user)
-	PRODUCT_PACKAGES += send_bug
-	PRODUCT_COPY_FILES += \
+        PRODUCT_PACKAGES += send_bug
+        PRODUCT_COPY_FILES += \
         system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
         system/extras/bugmailer/send_bug:system/bin/send_bug
 endif
 
-$(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
 
